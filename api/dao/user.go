@@ -25,7 +25,7 @@ func GetUserByUserName(username string) (user entity.User) {
 	return user
 }
 
-// 根据用户名查询用户
+// 根据用户id查询用户
 func GetUserByUserId(id int) (user entity.User, err error) {
 	err = db.Db.Where("id = ?", id).First(&user).Error
 	return user, err

@@ -38,7 +38,7 @@ func (u UserServiceImpl) Register(c *gin.Context, dto entity.UserRegisterDto) {
 	}
 	_, err = dao.Register(dto)
 	if err != nil {
-		result.Failed(c, int(result.ApiCode.FAILED), "注册是吧")
+		result.Failed(c, int(result.ApiCode.FAILED), "注册失败")
 		return
 	}
 	result.Success(c, "注册成功")
@@ -53,12 +53,12 @@ func (u UserServiceImpl) Login(c *gin.Context, dto entity.UserLoginDto) {
 	}
 	user := dao.GetUserByUserName(dto.Username)
 	if user.ID == 0 {
-		result.Failed(c, int(result.ApiCode.FAILED), "用户名和秘密不正确")
+		result.Failed(c, int(result.ApiCode.FAILED), "用户名不正确")
 		return
 	}
 	// 判断是否存在
 	if user.Password != util.EncryptionMd5(dto.Password) {
-		result.Failed(c, int(result.ApiCode.FAILED), "用户名和秘密不正确")
+		result.Failed(c, int(result.ApiCode.FAILED), "密码不正确")
 		return
 	}
 	result.Success(c, user)
