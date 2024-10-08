@@ -13,8 +13,8 @@ db:
   port: 3306
   db: WeAssist
   username: root
-  password: 12345678
-  charset: utf8
+  password: 123456
+  charset: utf8mb4
   # 最大空闲数
   maxIdle: 50
   # 最大连接数
