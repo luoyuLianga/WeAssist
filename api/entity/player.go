@@ -2,7 +2,7 @@ package entity
 
 import "WeAssist/common/util"
 
-// 选手模型对象
+// Player 选手模型对象
 type Player struct {
 	ID          uint       `gorm:"column:id;comment:'主键';primaryKey;NOT NULL" json:"id"`         //ID
 	Aid         int        `gorm:"column:aid;comment:'活动id'" json:"aId"`                         // 活动id
