@@ -4,7 +4,6 @@ import (
 	"WeAssist/common/config"
 	"WeAssist/pkg/db"
 	"WeAssist/pkg/log"
-	"WeAssist/pkg/redis"
 	"WeAssist/router"
 	"context"
 	"github.com/gin-gonic/gin"
@@ -50,5 +49,5 @@ func init() {
 	// mysql
 	db.SetupDBLink()
 	// redis
-	redis.SetupRedisDb()
+	// redis.SetupRedisDb()
 }

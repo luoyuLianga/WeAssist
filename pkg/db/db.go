@@ -36,7 +36,7 @@ func SetupDBLink() error {
 	Db.Raw("SELECT COUNT(*) FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = ?", dbConfig.Db).Scan(&result)
 	if result == 0 {
 		// 数据库不存在，创建数据库
-		createDBSQL := fmt.Sprintf("CREATE DATABASE `%s` CHARACTER SET utf8 COLLATE utf8_general_ci", dbConfig.Db)
+		createDBSQL := fmt.Sprintf("CREATE DATABASE `%s` CHARACTER SET utf8mb4 COLLATE utf8_general_ci", dbConfig.Db)
 		if err := Db.Exec(createDBSQL).Error; err != nil {
 			panic(fmt.Sprintf("failed to create database: %v", err))
 		}
@@ -77,19 +77,5 @@ func SetupDBLink() error {
 	}
 	sqlDB.SetMaxIdleConns(dbConfig.MaxIdle)
 	sqlDB.SetMaxOpenConns(dbConfig.MaxOpen)
-
-	// 自动创建表结构
-	// Db.Raw("SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = ? AND table_name = 'user';", dbConfig.Db).Scan(&result)
-
-	// if result == 0 {
-	// 	fmt.Println("Table 'user activity vote player' does not exist, creating...")
-	// 	Db.AutoMigrate(&entity.User{})
-	// 	Db.AutoMigrate(&entity.Activity{})
-	// Db.AutoMigrate(&entity.Vote{})
-	// 	Db.AutoMigrate(&entity.Player{})
-	// } else {
-	// 	fmt.Println("Table already exists, skipping creation.")
-	// }
-
 	return nil
 }
