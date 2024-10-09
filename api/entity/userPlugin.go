@@ -23,5 +23,5 @@ type AddUserPluginDto struct {
 	UserId     int    `json:"userId"  validate:"required"`
 	PluginName string `json:"pluginName" validate:"required"`
 	ModelName  string `json:"modelName" validate:"required"`
-	Action     string `json:"action" validate:"required"`
+	Action     string `json:"action" validate:"required,oneof=install upgrade uninstall"`
 }

@@ -42,7 +42,7 @@ func register(router *gin.Engine) {
 	}
 	userPlugin := router.Group("/api/userPlugin")
 	{
-		userPlugin.POST("/Add", controller.Add)
+		userPlugin.POST("/add", controller.Add)
 	}
 	player := router.Group("/api/player")
 	{
