@@ -6,8 +6,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func AddQaException(c *gin.Context) {
-	var dto entity.AddQaExceptionDto
+func AddOperation(c *gin.Context) {
+	var dto entity.AddOperationDto
 	_ = c.BindJSON(&dto)
-	service.QaExceptionService().Add(c, dto)
+	service.OperationService().Add(c, dto)
 }
