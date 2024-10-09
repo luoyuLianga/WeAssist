@@ -18,7 +18,7 @@ func (UserPlugin) TableName() string {
 	return "user_plugin"
 }
 
-// AddUserPluginDto 新增选手
+// AddUserPluginDto 新增用户插件
 type AddUserPluginDto struct {
 	UserId     int    `json:"userId"  validate:"required"`
 	PluginName string `json:"pluginName" validate:"required"`

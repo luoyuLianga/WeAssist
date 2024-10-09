@@ -42,8 +42,13 @@ func register(router *gin.Engine) {
 	}
 	userPlugin := router.Group("/api/userPlugin")
 	{
-		userPlugin.POST("/add", controller.Add)
+		userPlugin.POST("/add", controller.AddUserPlugin)
 	}
+	qaRecord := router.Group("/api/qaRecord")
+	{
+		qaRecord.POST("/add", controller.AddQaRecord)
+	}
+
 	player := router.Group("/api/player")
 	{
 		player.POST("/list", controller.GetPlayerList)

@@ -6,8 +6,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func AddUserPlugin(c *gin.Context) {
-	var dto entity.AddUserPluginDto
+func AddQaRecord(c *gin.Context) {
+	var dto entity.AddQaRecordDto
 	_ = c.BindJSON(&dto)
-	service.UserPluginService().Add(c, dto)
+	service.QaRecordService().Add(c, dto)
 }

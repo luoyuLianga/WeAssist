@@ -27,7 +27,7 @@ func (u UserPluginServiceImpl) Add(c *gin.Context, dto entity.AddUserPluginDto) 
 		result.Failed(c, int(result.ApiCode.FAILED), "用户不存在")
 		return
 	}
-	_, err = dao.Add(dto)
+	_, err = dao.AddUserPlugin(dto)
 	if err != nil {
 		result.Failed(c, int(result.ApiCode.FAILED), "添加失败")
 	}
