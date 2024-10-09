@@ -22,7 +22,7 @@ func AddUserPlugin(dto entity.AddUserPluginDto) (uint, error) {
 }
 
 // GetUserPluginById 根据用户插件id查询
-func GetUserPluginById(id int) (userPlugin entity.QaRecord, err error) {
+func GetUserPluginById(id int) (userPlugin entity.UserPlugin, err error) {
 	err = db.Db.Where("id = ?", id).First(&userPlugin).Error
 	return userPlugin, err
 }
