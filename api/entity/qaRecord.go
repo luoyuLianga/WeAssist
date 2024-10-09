@@ -7,7 +7,7 @@ import (
 // QaRecord 表示 qa_record 表的模型
 type QaRecord struct {
 	ID            uint       `gorm:"column:id;primaryKey;autoIncrement;comment:'主键，自增'" json:"id"`
-	UserPluginID  int        `gorm:"column:user_plugin_id;comment:'用户插件ID';not null" json:"userPluginId"`
+	UserPluginID  uint       `gorm:"column:user_plugin_id;comment:'用户插件ID';not null" json:"userPluginId"`
 	Source        string     `gorm:"column:source;type:varchar(64);not null;comment:'记录来源'" json:"source"`
 	UserQuestion  string     `gorm:"column:user_question;type:text;not null;comment:'用户提问'" json:"userQuestion"`
 	ModelResponse string     `gorm:"column:model_response;type:text;not null;comment:'模型回复'" json:"modelResponse"`
@@ -22,8 +22,8 @@ func (QaRecord) TableName() string {
 
 // AddQaRecordDto 新增QaRecordDto
 type AddQaRecordDto struct {
-	UserPluginID  int    `json:"userPluginId"  validate:"required"`
-	Source        string `json:"Source" validate:"required"`
+	UserPluginID  uint   `json:"userPluginId"  validate:"required"`
+	Source        string `json:"source" validate:"required,oneof=edit chat"`
 	UserQuestion  string `json:"userQuestion" validate:"required"`
 	ModelResponse string `json:"modelResponse" validate:"required"`
 }

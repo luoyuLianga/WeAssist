@@ -48,6 +48,10 @@ func register(router *gin.Engine) {
 	{
 		qaRecord.POST("/add", controller.AddQaRecord)
 	}
+	qaException := router.Group("/api/qaException")
+	{
+		qaException.POST("/add", controller.AddException)
+	}
 
 	player := router.Group("/api/player")
 	{
