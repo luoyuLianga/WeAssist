@@ -44,12 +44,14 @@ func (ods OperationDayStatsServiceImpl) Update(c *gin.Context, dto entity.Update
 		return
 	}
 
+	// 校验OpID字段
 	operation, _ := dao.GetOperationById(dto.OpID)
 	if operation.ID == 0 {
 		result.Failed(c, int(result.ApiCode.FAILED), "OperationId不存在")
 		return
 	}
 
+	// 根据OpID、Source、Day查询记录是否存在，如果不存在需要进行新增
 	operationDayStats := dao.GetOperationDayStats(dto.OpID, dto.Source, time.Now().Format("2006-01-02"))
 	if operationDayStats.ID == 0 {
 		_, err = dao.AddOperationDayStats(entity.AddOperationDayStatsDto(dto))
@@ -58,6 +60,8 @@ func (ods OperationDayStatsServiceImpl) Update(c *gin.Context, dto entity.Update
 			return
 		}
 	}
+
+	// 更新OpID、Source、Day记录下的count，增加1
 	_, err = dao.UpdateOperationDayStats(dto.OpID, dto.Source, time.Now().Format("2006-01-02"))
 	if err != nil {
 		result.Failed(c, int(result.ApiCode.FAILED), "UpdateOperationDayStats 失败")
