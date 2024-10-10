@@ -31,6 +31,7 @@ func (q OperationServiceImpl) Add(c *gin.Context, dto entity.AddOperationDto) {
 	_, err = dao.AddOperation(dto)
 	if err != nil {
 		result.Failed(c, int(result.ApiCode.FAILED), "添加失败")
+		return
 	}
 
 	result.Success(c, "添加成功")

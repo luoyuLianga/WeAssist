@@ -4,6 +4,7 @@ import (
 	"WeAssist/api/entity"
 	"WeAssist/common/util"
 	"WeAssist/pkg/db"
+	"gorm.io/gorm"
 	"time"
 )
 
@@ -18,4 +19,15 @@ func AddOperationDayStats(dto entity.AddOperationDayStatsDto) (uint, error) {
 	}
 	err := db.Db.Create(&operation).Error
 	return operation.ID, err
+}
+
+// GetOperationDayStats 根据OpID、Source和Day查询
+func GetOperationDayStats(opID uint, source string, day string) (operationDayStats entity.OperationDayStats) {
+	db.Db.Where("op_id = ?", opID).Or("source = ?", source).Or("day = ?", day).First(&operationDayStats)
+	return operationDayStats
+}
+
+func UpdateOperationDayStats() (operationDayStats entity.OperationDayStats) {
+	db.Db.Model(&operationDayStats).UpdateColumn("op_id", gorm.Expr("op_id + ?", 1))
+	return operationDayStats
 }

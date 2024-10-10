@@ -11,3 +11,9 @@ func AddOperationDayStats(c *gin.Context) {
 	_ = c.BindJSON(&dto)
 	service.OperationDayStatsService().Add(c, dto)
 }
+
+func UpdateOperationDayStats(c *gin.Context) {
+	var dto entity.UpdateOperationDayStatsDto
+	_ = c.BindJSON(&dto)
+	service.OperationDayStatsService().Update(c, dto)
+}
