@@ -19,6 +19,12 @@ func AddOperation(dto entity.AddOperationDto) (uint, error) {
 	return operation.ID, err
 }
 
+// GetOperationById 根据OperationId查询用户
+func GetOperationById(id uint) (operation entity.Operation, err error) {
+	err = db.Db.Where("id = ?", id).First(&operation).Error
+	return operation, err
+}
+
 // GetOperationByCode 根据OperationCode查询
 func GetOperationByCode(operationCode string) (operation entity.Operation) {
 	db.Db.Where("operation_code = ?", operationCode).First(&operation)
