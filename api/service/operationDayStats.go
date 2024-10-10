@@ -58,7 +58,7 @@ func (ods OperationDayStatsServiceImpl) Update(c *gin.Context, dto entity.Update
 			return
 		}
 	}
-	operationDayStats = dao.UpdateOperationDayStats()
+	operationDayStats = dao.UpdateOperationDayStats(dto.OpID, dto.Source, time.Now().Format("2006-01-02"))
 	if operationDayStats.ID == 0 {
 		result.Failed(c, int(result.ApiCode.FAILED), "dao.UpdateOperationDayStats() 失败")
 		return
