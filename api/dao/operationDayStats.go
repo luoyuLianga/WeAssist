@@ -23,7 +23,7 @@ func AddOperationDayStats(dto entity.AddOperationDayStatsDto) (uint, error) {
 
 // GetOperationDayStats 根据OpID、Source和Day查询
 func GetOperationDayStats(opID uint, source string, day string) (operationDayStats entity.OperationDayStats) {
-	db.Db.Where("op_id = ?", opID).Or("source = ?", source).Or("day = ?", day).First(&operationDayStats)
+	db.Db.Where("op_id = ? AND source = ? AND day = ?", opID, source, day).First(&operationDayStats)
 	return operationDayStats
 }
 
