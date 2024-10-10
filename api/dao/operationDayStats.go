@@ -27,8 +27,8 @@ func GetOperationDayStats(opID uint, source string, day string) (operationDaySta
 	return operationDayStats
 }
 
-func UpdateOperationDayStats(opID uint, source string, day string) (operationDayStats entity.OperationDayStats) {
-	db.Db.Model(&operationDayStats).Where("op_id = ? AND source = ? AND day = ?", opID, source, day).
-		UpdateColumn("count", gorm.Expr("count + ?", 1))
-	return operationDayStats
+func UpdateOperationDayStats(opID uint, source string, day string) (operationDayStats entity.OperationDayStats, err error) {
+	err = db.Db.Model(&operationDayStats).Where("op_id = ? AND source = ? AND day = ?", opID, source, day).
+		UpdateColumn("count", gorm.Expr("count + ?", 1)).Error
+	return operationDayStats, err
 }
