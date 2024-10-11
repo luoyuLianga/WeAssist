@@ -10,7 +10,7 @@ func InitCrontab() {
 	c := cron.New()
 	// 添加定时任务：每分钟执行一次
 	_, err := c.AddFunc("* * * * *", func() {
-		updateTest()
+		GetUseUser()
 	})
 	if err != nil {
 		fmt.Println("添加定时任务失败:", err)

@@ -1,7 +1,14 @@
 package cron
 
-import "WeAssist/pkg/log"
+import (
+	"WeAssist/api/service"
+	"WeAssist/pkg/log"
+)
 
-func updateTest() {
-	log.Log().Info("hello , test...")
+func GetUseUser() {
+	useUsers, err := service.UserDataDayStatsService().Add()
+	if err != nil {
+		log.Log().Error("Failed to fetch user stats: %v", err)
+	}
+	log.Log().Info("useUsers:%#v", useUsers)
 }

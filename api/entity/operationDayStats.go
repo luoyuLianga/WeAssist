@@ -22,12 +22,12 @@ func (OperationDayStats) TableName() string {
 
 // AddOperationDayStatsDto 用于新增 OperationDayStats 的 DTO
 type AddOperationDayStatsDto struct {
-	OpID   uint   `json:"operationId" validate:"required"` // 操作代码必填
-	Source string `json:"source" validate:"required"`      // 操作描述必填
+	OpID   uint   `json:"operationId" validate:"required"`            // 操作代码必填
+	Source string `json:"source" validate:"required,oneof=edit chat"` // 操作描述必填
 }
 
 // UpdateOperationDayStatsDto 用于新增 OperationDayStats 的 DTO
 type UpdateOperationDayStatsDto struct {
-	OpID   uint   `json:"operationId" validate:"required"` // 操作代码必填
-	Source string `json:"source" validate:"required"`      // 操作描述必填
+	OpID   uint   `json:"operationId" validate:"required"`            // 操作代码必填
+	Source string `json:"source" validate:"required,oneof=edit chat"` // 操作描述必填
 }
