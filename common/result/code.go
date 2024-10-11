@@ -27,7 +27,7 @@ func init() {
 	}
 }
 
-// 供外部调用
+// GetMessage 供外部调用
 func (c *Codes) GetMessage(code uint) string {
 	message, ok := c.Message[code]
 	if !ok {

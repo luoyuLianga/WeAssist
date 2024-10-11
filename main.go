@@ -2,6 +2,7 @@ package main
 
 import (
 	"WeAssist/common/config"
+	"WeAssist/cron"
 	"WeAssist/pkg/db"
 	"WeAssist/pkg/log"
 	"WeAssist/router"
@@ -24,6 +25,8 @@ func main() {
 		Addr:    config.Config.Server.Address,
 		Handler: router,
 	}
+	// 定时任务初始化
+	cron.InitCrontab()
 	// 启动服务
 	go func() {
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
