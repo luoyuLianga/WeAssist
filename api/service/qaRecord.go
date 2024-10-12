@@ -19,7 +19,7 @@ type IQaRecordService interface {
 type QaRecordServiceImpl struct{}
 
 func (q QaRecordServiceImpl) Add(c *gin.Context, dto entity.AddQaRecordDto) {
-	log.Log().Info("Add dto:%#v", dto)
+	log.Log().Infof("Add dto:%v", dto)
 
 	// 1. 基本参数校验
 	err := validator.New().Struct(dto)

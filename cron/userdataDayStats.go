@@ -9,7 +9,7 @@ import (
 func UseUserDayStats() {
 	useUsers, err := service.UserDataDayStatsService().UseUserDayStats()
 	if err != nil {
-		log.Log().Error("Failed to fetch user stats: %v", err)
+		log.Log().Errorf("Failed to fetch use user stats: %v", err)
 	}
 	log.Log().Info("useUsers:%#v", useUsers)
 }
@@ -18,7 +18,7 @@ func UseUserDayStats() {
 func ActiveUserDayStats() {
 	activeUsers, err := service.UserDataDayStatsService().ActiveUserDayStats()
 	if err != nil {
-		log.Log().Error("Failed to fetch user stats: %v", err)
+		log.Log().Errorf("Failed to fetch user stats: %v", err)
 	}
 	log.Log().Info("activeUsers:%#v", activeUsers)
 }
