@@ -21,9 +21,9 @@ func (uds UserDataDayStatsServiceImpl) Add() (useUsers dao.UseUsers, err error) 
 	useUsers, err = dao.GetUseUser(yesterdayStart, yesterdayEnd)
 
 	// 将userUsers转AddUserDataDayStatsDto的数组
-	var userDataDayStatsList []entity.AddUserDataDayStatsDto
+	var userDataDayStatsList []entity.UserDataDayStats
 	for _, user := range useUsers {
-		userDataDayStats := entity.AddUserDataDayStatsDto{
+		userDataDayStats := entity.UserDataDayStats{
 			Type:       "use_user",
 			PluginName: user.PluginName,
 			Count:      user.UserCount,

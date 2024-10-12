@@ -26,7 +26,7 @@ func GetUseUser(yesterdayStart time.Time, yesterdayEnd time.Time) (useUsers UseU
 }
 
 // AddOrUpdateBatchUserDataDayStats 添加操作
-func AddOrUpdateBatchUserDataDayStats(dto []entity.AddUserDataDayStatsDto) (err error) {
+func AddOrUpdateBatchUserDataDayStats(dto []entity.UserDataDayStats) (err error) {
 	// 分批插入
 	batchSize := config.Config.Db.BatchSize
 	for i := 0; i < batchSize; i += batchSize {
