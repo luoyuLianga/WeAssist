@@ -18,13 +18,13 @@ func GetQaData(yesterdayStart time.Time, yesterdayEnd time.Time) (qaData QaData,
 	// 执行查询
 	err = db.Db.Table("qa_record").Select(`
 		up.plugin_name,
-		qr.type,
-		qr.source,
+		qa_record.type,
+		qa_record.source,
 		COUNT(*) AS count,
-		SUM(qr.code_number) AS code_number`).
-		Joins("JOIN user_plugin up ON qr.user_plugin_id = up.id").
-		Where("qr.create_time >= ? AND qr.create_time < ?", yesterdayStart, yesterdayEnd).
-		Group("up.plugin_name, qr.type, qr.source").
+		SUM(qa_record.code_number) AS code_number`).
+		Joins("JOIN user_plugin up ON qa_record.user_plugin_id = up.id").
+		Where("qa_record.create_time >= ? AND qa_record.create_time < ?", yesterdayStart, yesterdayEnd).
+		Group("up.plugin_name, qa_record.type, qa_record.source").
 		Scan(&qaData).Error
 	return qaData, err
 }
