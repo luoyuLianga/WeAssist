@@ -12,8 +12,8 @@ func AddQaRecord(dto entity.AddQaRecordDto) (uint, error) {
 	qaRecord := entity.QaRecord{
 		UserPluginID:  dto.UserPluginID,
 		Source:        dto.Source,
-		UserQuestion:  dto.UserQuestion,
-		ModelResponse: dto.ModelResponse,
+		UserQuestion:  &dto.UserQuestion,
+		ModelResponse: &dto.ModelResponse,
 		CreateTime:    util.HTime{Time: time.Now()},
 		UpdateTime:    util.HTime{Time: time.Now()},
 	}
