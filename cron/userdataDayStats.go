@@ -11,7 +11,7 @@ func UseUserDayStats() {
 	if err != nil {
 		log.Log().Errorf("Failed to fetch use user stats: %v", err)
 	}
-	log.Log().Info("useUsers:%#v", useUsers)
+	log.Log().Infof("useUsers:%v", useUsers)
 }
 
 // ActiveUserDayStats 用户数据统计 活跃用户数据统计
@@ -20,5 +20,5 @@ func ActiveUserDayStats() {
 	if err != nil {
 		log.Log().Errorf("Failed to fetch user stats: %v", err)
 	}
-	log.Log().Info("activeUsers:%#v", activeUsers)
+	log.Log().Infof("activeUsers:%v", activeUsers)
 }

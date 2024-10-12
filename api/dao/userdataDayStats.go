@@ -13,7 +13,7 @@ type UserData []struct {
 	UserCount  uint
 }
 
-// GetUseUser 根据OpID、Source和Day查询
+// GetUseUser 根据T+1时间查询
 func GetUseUser(yesterdayStart time.Time, yesterdayEnd time.Time) (userData UserData, err error) {
 	// 执行查询
 	err = db.Db.Table("user_plugin").
@@ -25,7 +25,7 @@ func GetUseUser(yesterdayStart time.Time, yesterdayEnd time.Time) (userData User
 	return userData, err
 }
 
-// GetActiveUser 根据OpID、Source和Day查询
+// GetActiveUser 根据T+1时间查询
 func GetActiveUser(yesterdayStart time.Time, yesterdayEnd time.Time) (userData UserData, err error) {
 	// 执行查询
 	err = db.Db.Table("qa_record AS qr").

@@ -10,8 +10,18 @@ func InitCrontab() {
 	c := cron.New()
 	// 添加定时任务：每分钟执行一次  TODO 后面需要调整为每天0:05分开始执行
 	_, err := c.AddFunc("* * * * *", func() {
-		UseUserDayStats()
-		ActiveUserDayStats()
+
+		// 用户数据统计
+		{
+			//UseUserDayStats()
+			//ActiveUserDayStats()
+		}
+
+		// QA数据统计
+		{
+			QaDayStats()
+		}
+
 	})
 	if err != nil {
 		fmt.Println("添加定时任务失败:", err)
