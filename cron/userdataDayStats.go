@@ -5,8 +5,9 @@ import (
 	"WeAssist/pkg/log"
 )
 
-func GetUseUser() {
-	useUsers, err := service.UserDataDayStatsService().Add()
+// UseUserDayStats 用户数据统计 使用用户数据统计
+func UseUserDayStats() {
+	useUsers, err := service.UserDataDayStatsService().UseUserDayStats()
 	if err != nil {
 		log.Log().Error("Failed to fetch user stats: %v", err)
 	}

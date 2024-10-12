@@ -9,12 +9,12 @@ import (
 
 // IUserDataDayStatsService 定义接口
 type IUserDataDayStatsService interface {
-	Add() (dao.UseUsers, error)
+	UseUserDayStats() (dao.UseUsers, error)
 }
 
 type UserDataDayStatsServiceImpl struct{}
 
-func (uds UserDataDayStatsServiceImpl) Add() (useUsers dao.UseUsers, err error) {
+func (uds UserDataDayStatsServiceImpl) UseUserDayStats() (useUsers dao.UseUsers, err error) {
 	// 1. 查询T+1天的 新增用户记录，获取pluginName、count
 	yesterdayStart := time.Now().AddDate(0, 0, -1).Truncate(24 * time.Hour) // 昨天 00:00:00
 	yesterdayEnd := yesterdayStart.Add(24 * time.Hour)                      // 昨天 23:59:59
