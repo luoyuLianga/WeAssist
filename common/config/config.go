@@ -25,15 +25,16 @@ type server struct {
 
 // 数据库配置
 type db struct {
-	Dialects string `yaml:"dialects"`
-	Host     string `yaml:"host"`
-	Port     int    `yaml:"port"`
-	Db       string `yaml:"db"`
-	Username string `yaml:"username"`
-	Password string `yaml:"password"`
-	Charset  string `yaml:"charset"`
-	MaxIdle  int    `yaml:"maxIdle"`
-	MaxOpen  int    `yaml:"maxOpen"`
+	Dialects  string `yaml:"dialects"`
+	Host      string `yaml:"host"`
+	Port      int    `yaml:"port"`
+	Db        string `yaml:"db"`
+	Username  string `yaml:"username"`
+	Password  string `yaml:"password"`
+	Charset   string `yaml:"charset"`
+	MaxIdle   int    `yaml:"maxIdle"`
+	MaxOpen   int    `yaml:"maxOpen"`
+	BatchSize int    `yaml:"batchSize"`
 }
 
 // redis配置

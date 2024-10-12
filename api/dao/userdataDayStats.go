@@ -2,14 +2,15 @@ package dao
 
 import (
 	"WeAssist/api/entity"
-	"WeAssist/common/util"
+	"WeAssist/common/config"
 	"WeAssist/pkg/db"
+	"gorm.io/gorm/clause"
 	"time"
 )
 
 type UseUsers []struct {
 	PluginName string
-	UserCount  int
+	UserCount  uint
 }
 
 // GetUseUser 根据OpID、Source和Day查询
@@ -24,16 +25,26 @@ func GetUseUser(yesterdayStart time.Time, yesterdayEnd time.Time) (useUsers UseU
 	return useUsers, err
 }
 
-// AddUserDataDayStats 添加操作
-func AddUserDataDayStats(dto entity.AddUserDataDayStatsDto) (uint, error) {
-	userDataDayStats := entity.UserDataDayStats{
-		Type:       dto.Type,
-		PluginName: dto.PluginName,
-		Day:        time.Now().Format("2006-01-02"),
-		Count:      dto.Count,
-		CreateTime: util.HTime{Time: time.Now()},
-		UpdateTime: util.HTime{Time: time.Now()},
+// AddOrUpdateBatchUserDataDayStats 添加操作
+func AddOrUpdateBatchUserDataDayStats(dto []entity.AddUserDataDayStatsDto) (err error) {
+	// 分批插入
+	batchSize := config.Config.Db.BatchSize
+	for i := 0; i < batchSize; i += batchSize {
+		end := i + batchSize
+		if end > len(dto) {
+			end = len(dto)
+		}
+
+		data := dto[i:end]
+		// 使用 ON DUPLICATE KEY UPDATE 的方式处理冲突
+		err := db.Db.Clauses(clause.OnConflict{
+			Columns:   []clause.Column{{Name: "type"}, {Name: "plugin_name"}, {Name: "day"}}, // 唯一键冲突字段
+			DoUpdates: clause.AssignmentColumns([]string{"count"}),                           // 更新 count 和 update_time
+		}).Create(&data).Error
+
+		if err != nil {
+			return err
+		}
 	}
-	err := db.Db.Create(&userDataDayStats).Error
-	return userDataDayStats.ID, err
+	return nil
 }
