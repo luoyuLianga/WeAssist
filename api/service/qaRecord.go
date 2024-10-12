@@ -5,6 +5,7 @@ import (
 	"WeAssist/api/entity"
 	"WeAssist/common/constant"
 	"WeAssist/common/result"
+	"WeAssist/pkg/log"
 	"errors"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
@@ -18,6 +19,8 @@ type IQaRecordService interface {
 type QaRecordServiceImpl struct{}
 
 func (q QaRecordServiceImpl) Add(c *gin.Context, dto entity.AddQaRecordDto) {
+	log.Log().Info("Add dto:%#v", dto)
+
 	// 1. 基本参数校验
 	err := validator.New().Struct(dto)
 	if err != nil {
