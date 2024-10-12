@@ -13,3 +13,12 @@ func UseUserDayStats() {
 	}
 	log.Log().Info("useUsers:%#v", useUsers)
 }
+
+// ActiveUserDayStats 用户数据统计 活跃用户数据统计
+func ActiveUserDayStats() {
+	activeUsers, err := service.UserDataDayStatsService().ActiveUserDayStats()
+	if err != nil {
+		log.Log().Error("Failed to fetch user stats: %v", err)
+	}
+	log.Log().Info("activeUsers:%#v", activeUsers)
+}

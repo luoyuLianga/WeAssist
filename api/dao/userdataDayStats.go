@@ -8,21 +8,34 @@ import (
 	"time"
 )
 
-type UseUsers []struct {
+type UserData []struct {
 	PluginName string
 	UserCount  uint
 }
 
 // GetUseUser 根据OpID、Source和Day查询
-func GetUseUser(yesterdayStart time.Time, yesterdayEnd time.Time) (useUsers UseUsers, err error) {
+func GetUseUser(yesterdayStart time.Time, yesterdayEnd time.Time) (userData UserData, err error) {
 	// 执行查询
 	err = db.Db.Table("user_plugin").
 		Select("user_plugin.plugin_name, COUNT(DISTINCT user.id) as user_count").
 		Joins("JOIN user ON user.id = user_plugin.user_id").
 		Where("user.create_time >= ? AND user.create_time < ?", yesterdayStart, yesterdayEnd).
 		Group("user_plugin.plugin_name").
-		Scan(&useUsers).Error
-	return useUsers, err
+		Scan(&userData).Error
+	return userData, err
+}
+
+// GetActiveUser 根据OpID、Source和Day查询
+func GetActiveUser(yesterdayStart time.Time, yesterdayEnd time.Time) (userData UserData, err error) {
+	// 执行查询
+	err = db.Db.Table("qa_record AS qr").
+		Select("up.plugin_name, COUNT(DISTINCT up.user_id) AS user_count").
+		Joins("JOIN user_plugin AS up ON qr.user_plugin_id = up.id").
+		Where("qr.create_time >= ? AND qr.create_time < ?", yesterdayStart, yesterdayEnd).
+		Group("up.plugin_name").
+		Scan(&userData).Error
+
+	return userData, err
 }
 
 // AddOrUpdateBatchUserDataDayStats 添加操作
