@@ -29,5 +29,5 @@ type AddQaRecordDto struct {
 	Source        string `json:"source" validate:"required,oneof=edit chat"`
 	UserQuestion  string `json:"userQuestion"`
 	ModelResponse string `json:"modelResponse"`
-	CodeNumber    string `json:"codeNumber"`
+	CodeNumber    int    `json:"codeNumber"`
 }

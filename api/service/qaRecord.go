@@ -75,7 +75,7 @@ func CheckQaParam(dto entity.AddQaRecordDto) error {
 }
 
 func CheckAcceptParam(dto entity.AddQaRecordDto) error {
-	if dto.CodeNumber == "" {
+	if dto.CodeNumber == 0 {
 		return errors.New("code_number cannot be empty for Accept type")
 	}
 	return nil
