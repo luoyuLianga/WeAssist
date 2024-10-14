@@ -21,3 +21,10 @@ type AddOperationDto struct {
 	OperationCode string `json:"operationCode" validate:"required"` // 操作代码必填
 	OperationDesc string `json:"operationDesc" validate:"required"` // 操作描述必填
 }
+
+// UpdateOperationDto 用于新增 Operation 的 DTO
+type UpdateOperationDto struct {
+	ID            uint   `json:"id" validate:"required"`
+	OperationCode string `json:"operationCode" validate:"required"` // 操作代码必填
+	OperationDesc string `json:"operationDesc" validate:"required"` // 操作描述必填
+}

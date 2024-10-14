@@ -12,6 +12,7 @@ import (
 type IOperationService interface {
 	Add(c *gin.Context, dto entity.AddOperationDto)
 	Get(c *gin.Context)
+	Update(c *gin.Context, dto entity.UpdateOperationDto)
 }
 
 type OperationServiceImpl struct{}
@@ -45,6 +46,22 @@ func (q OperationServiceImpl) Get(c *gin.Context) {
 		return
 	}
 	result.Success(c, operations)
+}
+
+func (q OperationServiceImpl) Update(c *gin.Context, dto entity.UpdateOperationDto) {
+	err := validator.New().Struct(dto)
+	if err != nil {
+		result.Failed(c, int(result.ApiCode.REQUIRED), result.ApiCode.GetMessage(result.ApiCode.REQUIRED))
+		return
+	}
+
+	_, err = dao.UpdateOperation(dto)
+	if err != nil {
+		result.Failed(c, int(result.ApiCode.FAILED), "UpdateOperation Failed")
+		return
+	}
+
+	result.Success(c, "UpdateOperation Success")
 }
 
 var operationService = OperationServiceImpl{}
