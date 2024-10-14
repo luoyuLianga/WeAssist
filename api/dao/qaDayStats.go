@@ -1,7 +1,10 @@
 package dao
 
 import (
+	"WeAssist/api/entity"
+	"WeAssist/common/config"
 	"WeAssist/pkg/db"
+	"gorm.io/gorm/clause"
 	"time"
 )
 
@@ -9,8 +12,8 @@ type QaData []struct {
 	PluginName string
 	Type       string
 	Source     string
-	Count      uint
-	CodeNumber uint
+	Count      int
+	CodeNumber int
 }
 
 // GetQaData 根据T+1时间查询
@@ -27,4 +30,28 @@ func GetQaData(yesterdayStart time.Time, yesterdayEnd time.Time) (qaData QaData,
 		Group("up.plugin_name, qa_record.type, qa_record.source").
 		Scan(&qaData).Error
 	return qaData, err
+}
+
+// AddOrUpdateBatchQaDayStats 添加操作
+func AddOrUpdateBatchQaDayStats(dto []entity.QADayStats) (err error) {
+	// 分批插入
+	batchSize := config.Config.Db.BatchSize
+	for i := 0; i < batchSize; i += batchSize {
+		end := i + batchSize
+		if end > len(dto) {
+			end = len(dto)
+		}
+
+		data := dto[i:end]
+		// 使用 ON DUPLICATE KEY UPDATE 的方式处理冲突
+		err := db.Db.Clauses(clause.OnConflict{
+			Columns:   []clause.Column{{Name: "plugin_name"}, {Name: "type"}, {Name: "source"}, {Name: "day"}}, // 唯一键冲突字段
+			DoUpdates: clause.AssignmentColumns([]string{"count"}),                                             // 更新 count 和 update_time
+		}).Create(&data).Error
+
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }

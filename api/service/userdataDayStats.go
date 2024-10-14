@@ -21,7 +21,7 @@ func (uds UserDataDayStatsServiceImpl) UseUserDayStats() (useUsers dao.UserData,
 	yesterdayEnd := yesterdayStart.Add(24 * time.Hour)                      // 昨天 23:59:59
 	useUsers, err = dao.GetUseUser(yesterdayStart, yesterdayEnd)
 
-	// 将userUsers转AddUserDataDayStatsDto的数组
+	// 将userUsers转UserDataDayStats的数组
 	var userDataDayStatsList []entity.UserDataDayStats
 	for _, user := range useUsers {
 		userDataDayStats := entity.UserDataDayStats{
