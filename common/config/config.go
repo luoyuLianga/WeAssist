@@ -15,6 +15,7 @@ type config struct {
 	Redis         redis         `yaml:"redis"`
 	ImageSettings imageSettings `yaml:"imageSettings"`
 	Log           log           `yaml:"log"`
+	Cron          cron          `yaml:"cron"`
 }
 
 // 项目端口配置
@@ -54,6 +55,11 @@ type log struct {
 	Path  string `yaml:"path"`
 	Name  string `yaml:"name"`
 	Model string `yaml:"model"`
+}
+
+// cron配置
+type cron struct {
+	Run string `yaml:"run"`
 }
 
 var Config *config

@@ -43,3 +43,7 @@ log:
   model: console
   # 输出到文件
   # model: file
+
+# 定时任务执行周期
+cron:
+  run: 5 0 * * *
