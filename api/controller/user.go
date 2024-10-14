@@ -38,3 +38,9 @@ func Login(c *gin.Context) {
 func GetUser(c *gin.Context) {
 	service.UserService().Get(c)
 }
+
+func UpdateUser(c *gin.Context) {
+	var dto entity.UpdateUserDto
+	_ = c.BindJSON(&dto)
+	service.UserService().Update(c)
+}

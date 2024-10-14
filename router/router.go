@@ -40,6 +40,7 @@ func register(router *gin.Engine) {
 		user.POST("/register", controller.Register)
 		user.POST("/login", controller.Login)
 		user.GET("/get", controller.GetUser)
+		user.PUT("/update", controller.UpdateUser)
 	}
 	userPlugin := router.Group("/api/userPlugin")
 	{

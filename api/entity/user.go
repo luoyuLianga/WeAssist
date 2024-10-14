@@ -29,3 +29,9 @@ type UserLoginDto struct {
 	Username string `json:"username" validate:"required"` // 用户名
 	Password string `json:"password" validate:"required"` // 密码
 }
+
+// UpdateUserDto 登录参数
+type UpdateUserDto struct {
+	Username string `json:"username" validate:"required"` // 用户名
+	Password string `json:"password" validate:"required"` // 密码
+}

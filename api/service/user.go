@@ -15,9 +15,15 @@ type IUserService interface {
 	Register(c *gin.Context, dto entity.UserRegisterDto)
 	Login(c *gin.Context, dto entity.UserLoginDto)
 	Get(c *gin.Context)
+	UpdateUser(c *gin.Context, dto entity.UpdateUserDto)
 }
 
 type UserServiceImpl struct{}
+
+func (u UserServiceImpl) UpdateUser(c *gin.Context, dto entity.UpdateUserDto) {
+	//TODO implement me
+	panic("implement me")
+}
 
 func (u UserServiceImpl) Get(c *gin.Context) {
 	users, err := dao.GetUser()
