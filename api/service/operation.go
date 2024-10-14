@@ -58,6 +58,12 @@ func (q OperationServiceImpl) Update(c *gin.Context, dto entity.UpdateOperationD
 		return
 	}
 
+	operation, _ := dao.GetOperationById(dto.ID)
+	if operation.ID == 0 {
+		result.Failed(c, int(result.ApiCode.FAILED), "OperationId不存在")
+		return
+	}
+
 	_, err = dao.UpdateOperation(dto)
 	if err != nil {
 		result.Failed(c, int(result.ApiCode.FAILED), "UpdateOperation Failed")
