@@ -21,3 +21,7 @@ func UpdateOperation(c *gin.Context) {
 	_ = c.BindJSON(&dto)
 	service.OperationService().Update(c, dto)
 }
+
+func DeleteOperation(c *gin.Context) {
+	service.OperationService().Delete(c)
+}

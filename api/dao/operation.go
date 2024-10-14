@@ -42,3 +42,9 @@ func UpdateOperation(dto entity.UpdateOperationDto) (operations []entity.Operati
 		}).Error
 	return operations, err
 }
+
+// DeleteOperation 删除
+func DeleteOperation(id uint) (operation []entity.Operation, err error) {
+	err = db.Db.Delete(&operation, id).Error
+	return operation, err
+}

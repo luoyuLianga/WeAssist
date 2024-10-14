@@ -4,8 +4,10 @@ import (
 	"WeAssist/api/dao"
 	"WeAssist/api/entity"
 	"WeAssist/common/result"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
+	"strconv"
 )
 
 // IOperationService 定义接口
@@ -13,6 +15,7 @@ type IOperationService interface {
 	Add(c *gin.Context, dto entity.AddOperationDto)
 	Get(c *gin.Context)
 	Update(c *gin.Context, dto entity.UpdateOperationDto)
+	Delete(c *gin.Context)
 }
 
 type OperationServiceImpl struct{}
@@ -62,6 +65,30 @@ func (q OperationServiceImpl) Update(c *gin.Context, dto entity.UpdateOperationD
 	}
 
 	result.Success(c, "UpdateOperation Success")
+}
+
+func (q OperationServiceImpl) Delete(c *gin.Context) {
+	// 1. 从路径参数中获取 id，并检查是否存在
+	idStr, ok := c.Params.Get("id")
+	if !ok {
+		result.Failed(c, int(result.ApiCode.FAILED), "DeleteOperation Id Invalid")
+		return
+	}
+
+	// 2. 将 id 从字符串转换为 uint
+	id, err := strconv.ParseUint(idStr, 10, 64) // 64位无符号整数
+	if err != nil {
+		result.Failed(c, int(result.ApiCode.FAILED), "Invalid Id Format")
+		return
+	}
+
+	_, err = dao.DeleteOperation(uint(id))
+	if err != nil {
+		result.Failed(c, int(result.ApiCode.FAILED), "DeleteOperation Failed")
+		return
+	}
+
+	result.Success(c, fmt.Sprintf("DeleteOperation Success for ID %d", id))
 }
 
 var operationService = OperationServiceImpl{}
