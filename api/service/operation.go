@@ -11,6 +11,7 @@ import (
 // IOperationService 定义接口
 type IOperationService interface {
 	Add(c *gin.Context, dto entity.AddOperationDto)
+	Get(c *gin.Context)
 }
 
 type OperationServiceImpl struct{}
@@ -35,6 +36,15 @@ func (q OperationServiceImpl) Add(c *gin.Context, dto entity.AddOperationDto) {
 	}
 
 	result.Success(c, "添加成功")
+}
+
+func (q OperationServiceImpl) Get(c *gin.Context) {
+	operations, err := dao.GetOperation()
+	if err != nil {
+		result.Failed(c, int(result.ApiCode.FAILED), "GetOperation() Failed")
+		return
+	}
+	result.Success(c, operations)
 }
 
 var operationService = OperationServiceImpl{}

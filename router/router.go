@@ -55,6 +55,7 @@ func register(router *gin.Engine) {
 	operation := router.Group("/api/operation")
 	{
 		operation.POST("/add", controller.AddOperation)
+		operation.GET("/get", controller.GetOperation)
 	}
 	operationDayStats := router.Group("/api/operationDayStats")
 	{

@@ -30,3 +30,9 @@ func GetOperationByCode(operationCode string) (operation entity.Operation) {
 	db.Db.Where("operation_code = ?", operationCode).First(&operation)
 	return operation
 }
+
+// GetOperation 查询
+func GetOperation() (operations []entity.Operation, err error) {
+	err = db.Db.Find(&operations).Error
+	return operations, err
+}

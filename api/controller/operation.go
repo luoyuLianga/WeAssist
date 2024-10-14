@@ -11,3 +11,7 @@ func AddOperation(c *gin.Context) {
 	_ = c.BindJSON(&dto)
 	service.OperationService().Add(c, dto)
 }
+
+func GetOperation(c *gin.Context) {
+	service.OperationService().Get(c)
+}
