@@ -2,17 +2,17 @@ package entity
 
 import "WeAssist/common/util"
 
-// 用户模型对象
+// User 用户模型对象
 type User struct {
 	ID       uint   `gorm:"column:id;comment:'主键';primaryKey;NOT NULL" json:"id"`                //ID
 	Username string `gorm:"column:username;varchar(64);comment:'用户账号';NOT NULL" json:"username"` // 用户账号
-	Password string `gorm:"column:password;varchar(64);comment:'密码';NOT NULL" json:"password"`   // 密码
+	Password string `gorm:"column:password;varchar(64);comment:'密码';NOT NULL" json:"-"`          // 密码
 
 	CreateTime util.HTime `gorm:"column:create_time;comment:'创建时间';NOT NULL" json:"createTime"` // 创建时间
 	UpdateTime util.HTime `gorm:"column:update_time;comment:'创建时间';NOT NULL" json:"updateTime"` // 更新时间
 }
 
-// 表名 用于创建表
+// TableName 表名 用于创建表
 func (User) TableName() string {
 	return "user"
 }
