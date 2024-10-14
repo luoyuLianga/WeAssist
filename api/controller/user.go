@@ -34,3 +34,7 @@ func Login(c *gin.Context) {
 	_ = c.BindJSON(&dto)
 	service.UserService().Login(c, dto)
 }
+
+func GetUser(c *gin.Context) {
+	service.UserService().Get(c)
+}

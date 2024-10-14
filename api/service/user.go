@@ -6,7 +6,6 @@ import (
 	"WeAssist/api/entity"
 	"WeAssist/common/result"
 	"WeAssist/common/util"
-
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 )
@@ -15,11 +14,21 @@ import (
 type IUserService interface {
 	Register(c *gin.Context, dto entity.UserRegisterDto)
 	Login(c *gin.Context, dto entity.UserLoginDto)
+	Get(c *gin.Context)
 }
 
 type UserServiceImpl struct{}
 
-// 注册
+func (u UserServiceImpl) Get(c *gin.Context) {
+	users, err := dao.GetUser()
+	if err != nil {
+		result.Failed(c, int(result.ApiCode.FAILED), "GetUser() Failed")
+		return
+	}
+	result.Success(c, users)
+}
+
+// Register 注册
 func (u UserServiceImpl) Register(c *gin.Context, dto entity.UserRegisterDto) {
 	err := validator.New().Struct(dto)
 	if err != nil {
@@ -44,7 +53,7 @@ func (u UserServiceImpl) Register(c *gin.Context, dto entity.UserRegisterDto) {
 	result.Success(c, "注册成功")
 }
 
-// 登录
+// Login 登录
 func (u UserServiceImpl) Login(c *gin.Context, dto entity.UserLoginDto) {
 	err := validator.New().Struct(dto)
 	if err != nil {

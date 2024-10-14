@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-// 注册
+// Register 注册
 func Register(dto entity.UserRegisterDto) (uint, error) {
 	user := entity.User{
 		Username:   dto.Username,
@@ -37,4 +37,10 @@ func GetCountByT1(yesterdayStart util.HTime, yesterdayEnd util.HTime) (count int
 		Where("create_time >= ? AND create_time < ?", yesterdayStart, yesterdayEnd).
 		Count(&count).Error
 	return count, err
+}
+
+// GetUser 查询
+func GetUser() (users []entity.User, err error) {
+	err = db.Db.Find(&users).Error
+	return users, err
 }
