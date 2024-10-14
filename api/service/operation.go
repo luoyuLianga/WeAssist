@@ -82,9 +82,9 @@ func (q OperationServiceImpl) Delete(c *gin.Context) {
 		return
 	}
 
-	_, err = dao.DeleteOperation(uint(id))
+	err = dao.DeleteOperation(uint(id))
 	if err != nil {
-		result.Failed(c, int(result.ApiCode.FAILED), "DeleteOperation Failed")
+		result.Failed(c, int(result.ApiCode.FAILED), "DeleteOperation Failed: "+err.Error())
 		return
 	}
 
