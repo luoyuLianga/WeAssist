@@ -22,7 +22,11 @@ func (ods OperationDayStatsServiceImpl) GetMonth(c *gin.Context) {
 	// 获取当前日期并计算前11个月的起点
 	now := time.Now()
 	startDate := now.AddDate(0, -11, 0).Format("2006-01-02") // 前11个月的第一天
-	endDate := now.Format("2006-01-31")                      // 当前月份的最后一天
+
+	// 获取当前月份的最后一天
+	currentYear, currentMonth, _ := now.Date()
+	location := now.Location()
+	endDate := time.Date(currentYear, currentMonth+1, 0, 23, 59, 59, 0, location).Format("2006-01-02")
 
 	log.Log().Infof("startDate:%s endDate:%s", startDate, endDate)
 	getMonthODSDto, err := dao.GetMonthOperationDayStats(startDate, endDate)
