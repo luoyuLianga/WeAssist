@@ -27,6 +27,13 @@ func (u UserPluginServiceImpl) Add(c *gin.Context, dto entity.AddUserPluginDto) 
 		result.Failed(c, int(result.ApiCode.FAILED), "用户不存在")
 		return
 	}
+
+	userPlugin, _ := dao.GetUserPluginByPM(dto.PluginName, dto.ModelName)
+	if userPlugin.ID == 0 {
+		result.Failed(c, int(result.ApiCode.FAILED), "PluginName and ModelName 已存在")
+		return
+	}
+
 	_, err = dao.AddUserPlugin(dto)
 	if err != nil {
 		result.Failed(c, int(result.ApiCode.FAILED), err.Error())
