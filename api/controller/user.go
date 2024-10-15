@@ -42,5 +42,5 @@ func GetUser(c *gin.Context) {
 func UpdateUser(c *gin.Context) {
 	var dto entity.UpdateUserDto
 	_ = c.BindJSON(&dto)
-	service.UserService().Update(c)
+	//service.UserService().Update(c)
 }
