@@ -41,7 +41,7 @@ func register(router *gin.Engine) {
 		user.POST("/login", controller.Login)
 		user.GET("/get", controller.GetUser)
 		user.PUT("/update", controller.UpdateUser)
-		user.PUT("/delete/:id", controller.DeleteUser)
+		user.DELETE("/delete/:id", controller.DeleteUser)
 	}
 	userPlugin := router.Group("/api/userPlugin")
 	{
