@@ -44,3 +44,7 @@ func UpdateUser(c *gin.Context) {
 	_ = c.BindJSON(&dto)
 	service.UserService().Update(c, dto)
 }
+
+func DeleteUser(c *gin.Context) {
+	service.UserService().Delete(c)
+}

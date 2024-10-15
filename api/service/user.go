@@ -6,8 +6,10 @@ import (
 	"WeAssist/api/entity"
 	"WeAssist/common/result"
 	"WeAssist/common/util"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
+	"strconv"
 )
 
 // IUserService 定义接口
@@ -16,9 +18,34 @@ type IUserService interface {
 	Login(c *gin.Context, dto entity.UserLoginDto)
 	Get(c *gin.Context)
 	Update(c *gin.Context, dto entity.UpdateUserDto)
+	Delete(c *gin.Context)
 }
 
 type UserServiceImpl struct{}
+
+func (u UserServiceImpl) Delete(c *gin.Context) {
+	// 1. 从路径参数中获取 id，并检查是否存在
+	idStr, ok := c.Params.Get("id")
+	if !ok {
+		result.Failed(c, int(result.ApiCode.FAILED), "DeleteUser Id Invalid")
+		return
+	}
+
+	// 2. 将 id 从字符串转换为 uint
+	id, err := strconv.ParseUint(idStr, 10, 64) // 64位无符号整数
+	if err != nil {
+		result.Failed(c, int(result.ApiCode.FAILED), "Invalid Id Format")
+		return
+	}
+
+	err = dao.DeleteUser(uint(id))
+	if err != nil {
+		result.Failed(c, int(result.ApiCode.FAILED), "DeleteUser Failed: "+err.Error())
+		return
+	}
+
+	result.Success(c, fmt.Sprintf("DeleteUser Success for ID %d", id))
+}
 
 func (u UserServiceImpl) Update(c *gin.Context, dto entity.UpdateUserDto) {
 	err := validator.New().Struct(dto)

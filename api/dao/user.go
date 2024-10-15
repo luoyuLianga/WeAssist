@@ -4,6 +4,7 @@ import (
 	"WeAssist/api/entity"
 	"WeAssist/common/util"
 	"WeAssist/pkg/db"
+	"fmt"
 	"time"
 )
 
@@ -53,4 +54,21 @@ func UpdateUser(dto entity.UpdateUserDto) (user entity.User, err error) {
 		return user, err
 	}
 	return user, nil
+}
+
+func DeleteUser(id uint) (err error) {
+	// 删除指定ID的记录
+	result := db.Db.Delete(&entity.User{}, id)
+
+	// 检查是否发生错误
+	if result.Error != nil {
+		return result.Error
+	}
+
+	// 如果没有任何记录被删除，则返回提示信息
+	if result.RowsAffected == 0 {
+		return fmt.Errorf("未找到ID为 %d 的记录", id)
+	}
+
+	return nil // 删除成功
 }
