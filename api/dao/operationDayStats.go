@@ -35,3 +35,13 @@ func UpdateOperationDayStats(dto entity.OperationDayStatsDto, day string) (opera
 		UpdateColumn("count", gorm.Expr("count + ?", 1)).Error
 	return operationDayStats, err
 }
+
+func GetMonthOperationDayStats(startDate string, endDate string) (getMonthODSDto []entity.GetMonthODSDto, err error) {
+	err = db.Db.Table("operation_day_stats").
+		Select("DATE_FORMAT(day, '%Y-%m') AS month, plugin_name, source, SUM(count) AS total_count").
+		Where("day BETWEEN ? AND ?", startDate, endDate).
+		Group("month, plugin_name, source").
+		Order("month, plugin_name, source").
+		Scan(&getMonthODSDto).Error
+	return getMonthODSDto, err
+}

@@ -4,6 +4,7 @@ import (
 	"WeAssist/api/dao"
 	"WeAssist/api/entity"
 	"WeAssist/common/result"
+	"WeAssist/pkg/log"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"time"
@@ -12,9 +13,25 @@ import (
 // IOperationDayStatsService 定义接口
 type IOperationDayStatsService interface {
 	Update(c *gin.Context, dto entity.OperationDayStatsDto)
+	GetMonth(c *gin.Context)
 }
 
 type OperationDayStatsServiceImpl struct{}
+
+func (ods OperationDayStatsServiceImpl) GetMonth(c *gin.Context) {
+	// 获取当前日期并计算前11个月的起点
+	now := time.Now()
+	startDate := now.AddDate(0, -11, 0).Format("2006-01-02") // 前11个月的第一天
+	endDate := now.Format("2006-01-31")                      // 当前月份的最后一天
+
+	log.Log().Infof("startDate:%s endDate:%s", startDate, endDate)
+	getMonthODSDto, err := dao.GetMonthOperationDayStats(startDate, endDate)
+	if err != nil {
+		result.Failed(c, int(result.ApiCode.FAILED), "GetMonthOperationDayStats() Failed")
+		return
+	}
+	result.Success(c, getMonthODSDto)
+}
 
 func (ods OperationDayStatsServiceImpl) Update(c *gin.Context, dto entity.OperationDayStatsDto) {
 	err := validator.New().Struct(dto)
