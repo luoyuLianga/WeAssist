@@ -10,19 +10,33 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
-// 定义接口
+// IUserService 定义接口
 type IUserService interface {
 	Register(c *gin.Context, dto entity.UserRegisterDto)
 	Login(c *gin.Context, dto entity.UserLoginDto)
 	Get(c *gin.Context)
-	UpdateUser(c *gin.Context, dto entity.UpdateUserDto)
+	Update(c *gin.Context, dto entity.UpdateUserDto)
 }
 
 type UserServiceImpl struct{}
 
-func (u UserServiceImpl) UpdateUser(c *gin.Context, dto entity.UpdateUserDto) {
-	//TODO implement me
-	panic("implement me")
+func (u UserServiceImpl) Update(c *gin.Context, dto entity.UpdateUserDto) {
+	err := validator.New().Struct(dto)
+	if err != nil {
+		result.Failed(c, int(result.ApiCode.REQUIRED), result.ApiCode.GetMessage(result.ApiCode.REQUIRED))
+		return
+	}
+	user, err := dao.GetUserByUserId(dto.ID)
+	if user.ID == 0 {
+		result.Failed(c, int(result.ApiCode.FAILED), "UserID 不存在")
+		return
+	}
+	user, err = dao.UpdateUser(dto)
+	if err != nil {
+		result.Failed(c, int(result.ApiCode.FAILED), "UpdateUser Failed")
+		return
+	}
+	result.Success(c, "更新用户成功")
 }
 
 func (u UserServiceImpl) Get(c *gin.Context) {

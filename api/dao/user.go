@@ -44,3 +44,13 @@ func GetUser() (users []entity.User, err error) {
 	err = db.Db.Find(&users).Error
 	return users, err
 }
+
+// UpdateUser 查询
+func UpdateUser(dto entity.UpdateUserDto) (user entity.User, err error) {
+	dto.Password = util.EncryptionMd5(dto.Password)
+
+	if err := db.Db.Model(&user).Updates(dto).Error; err != nil {
+		return user, err
+	}
+	return user, nil
+}

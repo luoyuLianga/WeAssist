@@ -32,6 +32,7 @@ type UserLoginDto struct {
 
 // UpdateUserDto 登录参数
 type UpdateUserDto struct {
+	ID       int    `json:"id" validate:"required"`       // 用户id
 	Username string `json:"username" validate:"required"` // 用户名
 	Password string `json:"password" validate:"required"` // 密码
 }
