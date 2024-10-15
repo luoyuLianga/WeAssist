@@ -49,7 +49,7 @@ func GetUser() (users []entity.User, err error) {
 func UpdateUser(dto entity.UpdateUserDto) (user entity.User, err error) {
 	dto.Password = util.EncryptionMd5(dto.Password)
 
-	if err := db.Db.Model(&user).Updates(dto).Error; err != nil {
+	if err := db.Db.Model(&user).Where("id = ?", dto.ID).Omit("id").Updates(dto).Error; err != nil {
 		return user, err
 	}
 	return user, nil
