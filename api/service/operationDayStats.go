@@ -19,14 +19,12 @@ type IOperationDayStatsService interface {
 type OperationDayStatsServiceImpl struct{}
 
 func (ods OperationDayStatsServiceImpl) GetMonth(c *gin.Context) {
-	// 获取当前日期并计算前11个月的起点
+	// 获取当前时间
 	now := time.Now()
-	startDate := now.AddDate(0, -11, 0).Format("2006-01-02") // 前11个月的第一天
-
-	// 获取当前月份的最后一天
-	currentYear, currentMonth, _ := now.Date()
-	location := now.Location()
-	endDate := time.Date(currentYear, currentMonth+1, 0, 23, 59, 59, 0, location).Format("2006-01-02")
+	// 计算前11个月的第一天
+	startDate := time.Date(now.Year(), now.Month()-11, 1, 0, 0, 0, 0, now.Location()).Format("2006-01-02")
+	// 当前月的最后一天
+	endDate := time.Date(now.Year(), now.Month()+1, 0, 23, 59, 59, 0, now.Location()).Format("2006-01-02")
 
 	log.Log().Infof("startDate:%s endDate:%s", startDate, endDate)
 	getMonthODSDto, err := dao.GetMonthOperationDayStats(startDate, endDate)
