@@ -63,7 +63,6 @@ func register(router *gin.Engine) {
 	}
 	operationDayStats := router.Group("/api/operationDayStats")
 	{
-		operationDayStats.POST("/add", controller.AddOperationDayStats)
 		operationDayStats.POST("/update", controller.UpdateOperationDayStats)
 	}
 

@@ -6,12 +6,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func AddOperationDayStats(c *gin.Context) {
-	var dto entity.AddOperationDayStatsDto
-	_ = c.BindJSON(&dto)
-	service.OperationDayStatsService().Add(c, dto)
-}
-
 func UpdateOperationDayStats(c *gin.Context) {
 	var dto entity.UpdateOperationDayStatsDto
 	_ = c.BindJSON(&dto)
