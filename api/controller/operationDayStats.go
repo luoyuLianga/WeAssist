@@ -7,7 +7,7 @@ import (
 )
 
 func UpdateOperationDayStats(c *gin.Context) {
-	var dto entity.UpdateOperationDayStatsDto
+	var dto entity.OperationDayStatsDto
 	_ = c.BindJSON(&dto)
 	service.OperationDayStatsService().Update(c, dto)
 }
