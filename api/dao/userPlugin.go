@@ -28,7 +28,7 @@ func GetUserPluginById(id uint) (userPlugin entity.UserPlugin, err error) {
 }
 
 // GetUserPluginByPM 根据PluginName和ModelName查询
-func GetUserPluginByPM(userId uint, pluginName string) (userPlugin entity.UserPlugin, err error) {
+func GetUserPluginByPM(userId int, pluginName string) (userPlugin entity.UserPlugin, err error) {
 	err = db.Db.Where("user_id = ? AND plugin_name = ?", userId, pluginName).First(&userPlugin).Error
 	return userPlugin, err
 }
