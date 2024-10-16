@@ -33,7 +33,7 @@ type GetDayQDSReqDto struct {
 type GetDayQDSRspDto struct {
 	Day        string `json:"Day"`
 	PluginName string `json:"plugin_name"`
-	Type       string `form:"type"`
+	Type       string `json:"type"`
 	Source     string `json:"source"`
 	Count      uint   `json:"count"`
 	CodeNumber uint   `json:"codeNumber"`
