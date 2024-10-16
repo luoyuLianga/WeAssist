@@ -19,5 +19,5 @@ func GetMonthOperationDayStats(c *gin.Context) {
 func GetDayOperationDayStats(c *gin.Context) {
 	var dto entity.OperationDayStatsDto
 	_ = c.BindJSON(&dto)
-	service.OperationDayStatsService().GetDay(c, dto)
+	//service.OperationDayStatsService().GetDay(c, dto)
 }
