@@ -14,12 +14,18 @@ import (
 type IOperationDayStatsService interface {
 	Update(c *gin.Context, dto entity.OperationDayStatsDto)
 	GetMonth(c *gin.Context)
-	GetDay(c *gin.Context, dto entity.GetDayODSReqDto)
+	GetDay(c *gin.Context)
 }
 
 type OperationDayStatsServiceImpl struct{}
 
-func (ods OperationDayStatsServiceImpl) GetDay(c *gin.Context, dto entity.GetDayODSReqDto) {
+func (ods OperationDayStatsServiceImpl) GetDay(c *gin.Context) {
+	var dto entity.GetDayODSReqDto
+	if err := c.ShouldBindQuery(&dto); err != nil {
+		result.Failed(c, int(result.ApiCode.FAILED), "GetDayOperationDayStats() Failed")
+		return
+	}
+
 	getDayODSDto, err := dao.GetDayOperationDayStats(dto.StartDay, dto.EndDay)
 	if err != nil {
 		result.Failed(c, int(result.ApiCode.FAILED), "GetDayOperationDayStats() Failed")
