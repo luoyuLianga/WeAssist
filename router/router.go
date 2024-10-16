@@ -69,6 +69,12 @@ func register(router *gin.Engine) {
 		operationDayStats.GET("/getDay", controller.GetDayOperationDayStats)
 	}
 
+	qaDayStats := router.Group("/api/qaDayStats")
+	{
+		//qaDayStats.GET("/getMonth", controller.GetMonthQaDayStats)
+		qaDayStats.GET("/getDay", controller.GetDayQaDayStats)
+	}
+
 	player := router.Group("/api/player")
 	{
 		player.POST("/list", controller.GetPlayerList)

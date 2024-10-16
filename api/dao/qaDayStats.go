@@ -55,3 +55,27 @@ func AddOrUpdateBatchQaDayStats(dto []entity.QADayStats) (err error) {
 	}
 	return nil
 }
+
+func GetDayQaDayStats(dto entity.GetDayQDSReqDto) (getDayQDSRspDto []entity.GetDayQDSRspDto, err error) {
+	// 创建基本查询
+	query := db.Db.Table("qa_day_stats").
+		Select("day, plugin_name, type, source, code_number, count").
+		Where("day BETWEEN ? AND ?", dto.StartDay, dto.EndDay)
+
+	// 添加条件筛选
+	if dto.PluginName != "" {
+		query = query.Where("plugin_name = ?", dto.PluginName)
+	}
+	if dto.Type != "" {
+		query = query.Where("type = ?", dto.Type)
+	}
+	if dto.Source != "" {
+		query = query.Where("source = ?", dto.Source)
+	}
+
+	// 执行查询并聚合结果
+	err = query.Order("day, plugin_name, type, source").
+		Scan(&getDayQDSRspDto).Error
+
+	return getDayQDSRspDto, err
+}

@@ -21,3 +21,20 @@ type QADayStats struct {
 func (QADayStats) TableName() string {
 	return "qa_day_stats"
 }
+
+type GetDayQDSReqDto struct {
+	StartDay   string `form:"startDay" binding:"required"`
+	EndDay     string `form:"endDay" binding:"required"`
+	PluginName string `form:"pluginName"`
+	Type       string `form:"type"`
+	Source     string `form:"source"`
+}
+
+type GetDayQDSRspDto struct {
+	Day        string `json:"Day"`
+	PluginName string `json:"plugin_name"`
+	Type       uint   `json:"type"`
+	Source     string `json:"source"`
+	Count      uint   `json:"count"`
+	CodeNumber uint   `json:"codeNumber"`
+}
