@@ -30,7 +30,7 @@ type OperationDayStatsDto struct {
 
 type GetMonthODSReqDto struct {
 	PluginName string `form:"pluginName"`
-	OpID       string `form:"opId"`
+	OpID       uint   `form:"opId"`
 	Source     string `form:"source"`
 }
 

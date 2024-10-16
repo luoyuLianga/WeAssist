@@ -71,7 +71,7 @@ func register(router *gin.Engine) {
 
 	qaDayStats := router.Group("/api/qaDayStats")
 	{
-		//qaDayStats.GET("/getMonth", controller.GetMonthQaDayStats)
+		qaDayStats.GET("/getMonth", controller.GetMonthQaDayStats)
 		qaDayStats.GET("/getDay", controller.GetDayQaDayStats)
 	}
 

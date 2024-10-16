@@ -22,6 +22,21 @@ func (QADayStats) TableName() string {
 	return "qa_day_stats"
 }
 
+type GetMonthQDSReqDto struct {
+	PluginName string `form:"pluginName"`
+	Type       string `form:"source"`
+	Source     string `form:"source"`
+}
+
+type GetMonthQDSRspDto struct {
+	Month           string `json:"month"`
+	PluginName      string `json:"pluginName"`
+	Type            string `json:"opId"`
+	Source          string `json:"source"`
+	TotalCount      uint   `json:"totalCount"`
+	TotalCodeNumber uint   `json:"totalCodeNumber"`
+}
+
 type GetDayQDSReqDto struct {
 	StartDay   string `form:"startDay" binding:"required"`
 	EndDay     string `form:"endDay" binding:"required"`
@@ -31,8 +46,8 @@ type GetDayQDSReqDto struct {
 }
 
 type GetDayQDSRspDto struct {
-	Day        string `json:"Day"`
-	PluginName string `json:"plugin_name"`
+	Day        string `json:"day"`
+	PluginName string `json:"pluginName"`
 	Type       string `json:"type"`
 	Source     string `json:"source"`
 	Count      uint   `json:"count"`

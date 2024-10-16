@@ -45,7 +45,7 @@ func GetMonthOperationDayStats(dto entity.GetMonthODSReqDto, startDate string, e
 	if dto.PluginName != "" {
 		query = query.Where("plugin_name = ?", dto.PluginName)
 	}
-	if dto.OpID != "" {
+	if dto.OpID != 0 {
 		query = query.Where("op_id = ?", dto.OpID)
 	}
 	if dto.Source != "" {

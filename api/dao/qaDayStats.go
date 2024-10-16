@@ -79,3 +79,25 @@ func GetDayQaDayStats(dto entity.GetDayQDSReqDto) (getDayQDSRspDto []entity.GetD
 
 	return getDayQDSRspDto, err
 }
+
+func GetMonthQaDayStats(dto entity.GetMonthQDSReqDto, startDate string, endDate string) (getDayQDSRspDto []entity.GetMonthQDSRspDto, err error) {
+	query := db.Db.Table("qa_day_stats").
+		Select("DATE_FORMAT(day, '%Y-%m') AS month, plugin_name, type, source, SUM(count) AS total_count, SUM(code_name) AS total_code_name").
+		Where("day BETWEEN ? AND ?", startDate, endDate)
+
+	// 添加条件筛选
+	if dto.PluginName != "" {
+		query = query.Where("plugin_name = ?", dto.PluginName)
+	}
+	if dto.Type != "" {
+		query = query.Where("type = ?", dto.Type)
+	}
+	if dto.Source != "" {
+		query = query.Where("source = ?", dto.Source)
+	}
+
+	err = query.Group("month, plugin_name, type, source").
+		Order("month, plugin_name, type, source").
+		Scan(&getDayQDSRspDto).Error
+	return getDayQDSRspDto, err
+}
