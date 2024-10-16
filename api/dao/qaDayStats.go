@@ -82,7 +82,7 @@ func GetDayQaDayStats(dto entity.GetDayQDSReqDto) (getDayQDSRspDto []entity.GetD
 
 func GetMonthQaDayStats(dto entity.GetMonthQDSReqDto, startDate string, endDate string) (getDayQDSRspDto []entity.GetMonthQDSRspDto, err error) {
 	query := db.Db.Table("qa_day_stats").
-		Select("DATE_FORMAT(day, '%Y-%m') AS month, plugin_name, type, source, SUM(count) AS total_count, SUM(code_name) AS total_code_name").
+		Select("DATE_FORMAT(day, '%Y-%m') AS month, plugin_name, type, source, SUM(count) AS total_count, SUM(code_number) AS total_code_number").
 		Where("day BETWEEN ? AND ?", startDate, endDate)
 
 	// 添加条件筛选
