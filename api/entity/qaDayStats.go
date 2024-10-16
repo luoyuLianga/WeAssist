@@ -24,14 +24,14 @@ func (QADayStats) TableName() string {
 
 type GetMonthQDSReqDto struct {
 	PluginName string `form:"pluginName"`
-	Type       string `form:"source"`
+	Type       string `form:"type"`
 	Source     string `form:"source"`
 }
 
 type GetMonthQDSRspDto struct {
 	Month           string `json:"month"`
 	PluginName      string `json:"pluginName"`
-	Type            string `json:"opId"`
+	Type            string `json:"type"`
 	Source          string `json:"source"`
 	TotalCount      uint   `json:"totalCount"`
 	TotalCodeNumber uint   `json:"totalCodeNumber"`
