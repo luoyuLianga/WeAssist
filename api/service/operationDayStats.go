@@ -26,7 +26,7 @@ func (ods OperationDayStatsServiceImpl) GetDay(c *gin.Context) {
 		return
 	}
 
-	getDayODSDto, err := dao.GetDayOperationDayStats(dto.StartDay, dto.EndDay)
+	getDayODSDto, err := dao.GetDayOperationDayStats(dto)
 	if err != nil {
 		result.Failed(c, int(result.ApiCode.FAILED), "GetDayOperationDayStats() Failed")
 		return

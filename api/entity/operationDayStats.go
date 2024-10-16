@@ -38,8 +38,11 @@ type GetMonthODSDto struct {
 }
 
 type GetDayODSReqDto struct {
-	StartDay string `form:"startDay" binding:"required"`
-	EndDay   string `form:"endDay" binding:"required"`
+	StartDay   string `form:"startDay" binding:"required"`
+	EndDay     string `form:"endDay" binding:"required"`
+	PluginName string `form:"pluginName"`
+	OpID       string `form:"opId"`
+	Source     string `form:"source"`
 }
 
 type GetDayODSRspDto struct {
