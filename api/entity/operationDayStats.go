@@ -45,6 +45,7 @@ type GetDayODSReqDto struct {
 type GetDayODSRspDto struct {
 	Day        string `json:"Day"`
 	PluginName string `json:"plugin_name"`
+	OpID       uint   `json:"opId"`
 	Source     string `json:"source"`
-	TotalCount uint   `json:"total_count"`
+	Count      uint   `json:"count"`
 }

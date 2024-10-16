@@ -45,3 +45,13 @@ func GetMonthOperationDayStats(startDate string, endDate string) (getMonthODSDto
 		Scan(&getMonthODSDto).Error
 	return getMonthODSDto, err
 }
+
+func GetDayOperationDayStats(startDay string, endDay string) (getDayODSRspDto []entity.GetDayODSRspDto, err error) {
+	err = db.Db.Table("operation_day_stats").
+		Select("day, plugin_name, op_id, source, SUM(count) AS count").
+		Where("day BETWEEN ? AND ?", startDay, endDay).
+		Group("day, plugin_name, op_id, source").
+		Order("day, plugin_name, op_id, source").
+		Scan(&getDayODSRspDto).Error
+	return getDayODSRspDto, err
+}

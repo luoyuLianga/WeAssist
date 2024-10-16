@@ -14,10 +14,19 @@ import (
 type IOperationDayStatsService interface {
 	Update(c *gin.Context, dto entity.OperationDayStatsDto)
 	GetMonth(c *gin.Context)
-	//GetDay(c *gin.Context, dto entity.GetDayODSReqDto)
+	GetDay(c *gin.Context, dto entity.GetDayODSReqDto)
 }
 
 type OperationDayStatsServiceImpl struct{}
+
+func (ods OperationDayStatsServiceImpl) GetDay(c *gin.Context, dto entity.GetDayODSReqDto) {
+	getDayODSDto, err := dao.GetDayOperationDayStats(dto.StartDay, dto.EndDay)
+	if err != nil {
+		result.Failed(c, int(result.ApiCode.FAILED), "GetDayOperationDayStats() Failed")
+		return
+	}
+	result.Success(c, getDayODSDto)
+}
 
 func (ods OperationDayStatsServiceImpl) GetMonth(c *gin.Context) {
 	// 获取当前时间
