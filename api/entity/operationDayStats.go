@@ -28,8 +28,13 @@ type OperationDayStatsDto struct {
 	Source     string `json:"source" validate:"required,oneof=edit chat"` // 操作描述必填
 }
 
-// GetMonthODSDto 用于保存查询结果的结构体
-type GetMonthODSDto struct {
+type GetMonthODSReqDto struct {
+	PluginName string `form:"pluginName"`
+	OpID       string `form:"opId"`
+	Source     string `form:"source"`
+}
+
+type GetMonthODSRspDto struct {
 	Month      string `json:"month"`
 	PluginName string `json:"plugin_name"`
 	OpID       uint   `json:"opId"`

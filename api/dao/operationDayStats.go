@@ -36,14 +36,26 @@ func UpdateOperationDayStats(dto entity.OperationDayStatsDto, day string) (opera
 	return operationDayStats, err
 }
 
-func GetMonthOperationDayStats(startDate string, endDate string) (getMonthODSDto []entity.GetMonthODSDto, err error) {
-	err = db.Db.Table("operation_day_stats").
+func GetMonthOperationDayStats(dto entity.GetMonthODSReqDto, startDate string, endDate string) (getDayODSRspDto []entity.GetMonthODSRspDto, err error) {
+	query := db.Db.Table("operation_day_stats").
 		Select("DATE_FORMAT(day, '%Y-%m') AS month, plugin_name, op_id, source, SUM(count) AS total_count").
-		Where("day BETWEEN ? AND ?", startDate, endDate).
-		Group("month, plugin_name, op_id, source").
+		Where("day BETWEEN ? AND ?", startDate, endDate)
+
+	// 添加条件筛选
+	if dto.PluginName != "" {
+		query = query.Where("plugin_name = ?", dto.PluginName)
+	}
+	if dto.OpID != "" {
+		query = query.Where("op_id = ?", dto.OpID)
+	}
+	if dto.Source != "" {
+		query = query.Where("source = ?", dto.Source)
+	}
+
+	err = query.Group("month, plugin_name, op_id, source").
 		Order("month, plugin_name, op_id, source").
-		Scan(&getMonthODSDto).Error
-	return getMonthODSDto, err
+		Scan(&getDayODSRspDto).Error
+	return getDayODSRspDto, err
 }
 
 func GetDayOperationDayStats(dto entity.GetDayODSReqDto) (getDayODSRspDto []entity.GetDayODSRspDto, err error) {

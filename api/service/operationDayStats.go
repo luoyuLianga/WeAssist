@@ -22,7 +22,7 @@ type OperationDayStatsServiceImpl struct{}
 func (ods OperationDayStatsServiceImpl) GetDay(c *gin.Context) {
 	var dto entity.GetDayODSReqDto
 	if err := c.ShouldBindQuery(&dto); err != nil {
-		result.Failed(c, int(result.ApiCode.FAILED), "GetDayOperationDayStats() Failed")
+		result.Failed(c, int(result.ApiCode.FAILED), "GetDayOperationDayStats() ShouldBindQuery Failed")
 		return
 	}
 
@@ -35,6 +35,12 @@ func (ods OperationDayStatsServiceImpl) GetDay(c *gin.Context) {
 }
 
 func (ods OperationDayStatsServiceImpl) GetMonth(c *gin.Context) {
+	var dto entity.GetMonthODSReqDto
+	if err := c.ShouldBindQuery(&dto); err != nil {
+		result.Failed(c, int(result.ApiCode.FAILED), "GetMonthOperationDayStats() ShouldBindQuery Failed")
+		return
+	}
+
 	// 获取当前时间
 	now := time.Now()
 	// 计算前11个月的第一天
@@ -43,7 +49,7 @@ func (ods OperationDayStatsServiceImpl) GetMonth(c *gin.Context) {
 	endDate := time.Date(now.Year(), now.Month()+1, 0, 23, 59, 59, 0, now.Location()).Format("2006-01-02")
 
 	log.Log().Infof("startDate:%s endDate:%s", startDate, endDate)
-	getMonthODSDto, err := dao.GetMonthOperationDayStats(startDate, endDate)
+	getMonthODSDto, err := dao.GetMonthOperationDayStats(dto, startDate, endDate)
 	if err != nil {
 		result.Failed(c, int(result.ApiCode.FAILED), "GetMonthOperationDayStats() Failed")
 		return
