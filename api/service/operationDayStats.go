@@ -20,6 +20,9 @@ type IOperationDayStatsService interface {
 type OperationDayStatsServiceImpl struct{}
 
 func (ods OperationDayStatsServiceImpl) GetDay(c *gin.Context) {
+	startDay := c.Query("startDay")
+	log.Log().Infof("startDay:%s", startDay)
+
 	var dto entity.GetDayODSReqDto
 	if err := c.ShouldBindQuery(&dto); err != nil {
 		result.Failed(c, int(result.ApiCode.FAILED), "GetDayOperationDayStats() Failed")
