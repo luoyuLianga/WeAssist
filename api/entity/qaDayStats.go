@@ -10,7 +10,7 @@ type QADayStats struct {
 	PluginName string     `gorm:"column:plugin_name;type:varchar(64);not null;comment:'插件名称'" json:"pluginName"`
 	Type       string     `gorm:"column:type;type:enum('qa', 'accept', 'reject');not null;comment:'数据类型（qa, accept, reject）'" json:"type"`
 	Source     string     `gorm:"column:source;type:enum('chat', 'edit');not null;comment:'数据来源（chat, edit）'" json:"source"`
-	Day        string     `gorm:"column:day;type:date;not null;comment:'日期'" json:"day"`
+	Day        string     `gorm:"column:day;type:varchar(64);not null;comment:'日期'" json:"day"`
 	Count      int        `gorm:"column:count;not null;default:0;comment:'计数'" json:"count"`
 	CodeNumber int        `gorm:"column:code_number;not null;default:0;comment:'代码编号'" json:"codeNumber"`
 	CreateTime util.HTime `gorm:"column:create_time;type:timestamp;default:CURRENT_TIMESTAMP;comment:'创建时间'" json:"createTime"`
