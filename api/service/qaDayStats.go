@@ -14,12 +14,12 @@ import (
 type IQaDayStatsService interface {
 	QaDayStats() (dao.QaData, error)
 	GetDay(c *gin.Context)
-	GetMonty(c *gin.Context)
+	GetMonth(c *gin.Context)
 }
 
 type QaDayStatsServiceImpl struct{}
 
-func (q QaDayStatsServiceImpl) GetMonty(c *gin.Context) {
+func (q QaDayStatsServiceImpl) GetMonth(c *gin.Context) {
 	var dto entity.GetMonthQDSReqDto
 	if err := c.ShouldBindQuery(&dto); err != nil {
 		result.Failed(c, int(result.ApiCode.FAILED), "GetMonthQaDayStats() ShouldBindQuery Failed")
