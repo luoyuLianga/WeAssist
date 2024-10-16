@@ -14,6 +14,7 @@ import (
 type IOperationDayStatsService interface {
 	Update(c *gin.Context, dto entity.OperationDayStatsDto)
 	GetMonth(c *gin.Context)
+	//GetDay(c *gin.Context, dto entity.GetDayODSReqDto)
 }
 
 type OperationDayStatsServiceImpl struct{}

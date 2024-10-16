@@ -32,6 +32,19 @@ type OperationDayStatsDto struct {
 type GetMonthODSDto struct {
 	Month      string `json:"month"`
 	PluginName string `json:"plugin_name"`
+	OpID       uint   `json:"opId"`
+	Source     string `json:"source"`
+	TotalCount uint   `json:"total_count"`
+}
+
+type GetDayODSReqDto struct {
+	StartDay string `json:"startDay"`
+	EndDay   string `json:"EndDay"`
+}
+
+type GetDayODSRspDto struct {
+	Day        string `json:"Day"`
+	PluginName string `json:"plugin_name"`
 	Source     string `json:"source"`
 	TotalCount uint   `json:"total_count"`
 }
